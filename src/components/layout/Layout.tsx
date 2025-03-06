@@ -1,7 +1,8 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import LoadingScreen from "../LoadingScreen";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,39 +15,14 @@ export default function Layout({ children }: LayoutProps) {
     // Simulate loading time
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <AnimatePresence>
-        {loading ? (
-          <motion.div
-            key="loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background"
-          >
-            <div className="flex flex-col items-center">
-              <div className="relative w-24 h-24">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-16 w-16 rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <img src="/logo.svg" alt="IntelleJ Logo" className="h-10" />
-                </div>
-              </div>
-              <h2 className="mt-4 text-xl font-semibold">IntelleJ</h2>
-              <p className="text-sm text-muted-foreground mt-2">
-                Loading amazing experiences...
-              </p>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <AnimatePresence>{loading ? <LoadingScreen /> : null}</AnimatePresence>
 
       <Navbar />
       <main className="flex-grow">{children}</main>
