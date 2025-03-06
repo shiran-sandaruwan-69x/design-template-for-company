@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 interface LogoItem {
@@ -50,28 +49,9 @@ const logos: LogoItem[] = [
 ];
 
 // Duplicate logos for seamless infinite scroll
-const duplicatedLogos = [...logos, ...logos];
+const duplicatedLogos = [...logos, ...logos, ...logos];
 
 export default function LogoCarousel() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollRef.current) {
-        // Reset scroll position when it reaches the end to create infinite effect
-        if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth / 2) {
-          scrollRef.current.scrollLeft = 0;
-        }
-      }
-    };
-
-    const scrollContainer = scrollRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll);
-      return () => scrollContainer.removeEventListener("scroll", handleScroll);
-    }
-  }, []);
-
   return (
     <div className="py-16 bg-background overflow-hidden">
       <div className="container mx-auto px-4 mb-8">
@@ -97,63 +77,32 @@ export default function LogoCarousel() {
         </div>
       </div>
 
-      {/* First carousel - moving left */}
+      {/* Infinite scrolling carousel */}
       <div className="relative w-full overflow-hidden">
         <motion.div
           initial={{ x: 0 }}
-          animate={{ x: "-50%" }}
+          animate={{ x: "-100%" }}
           transition={{
             repeat: Infinity,
-            duration: 30,
+            duration: 40,
             ease: "linear",
             repeatType: "loop",
           }}
-          className="flex items-center space-x-12 whitespace-nowrap"
+          className="flex items-center space-x-16 whitespace-nowrap"
         >
           {duplicatedLogos.map((item, index) => (
             <div
-              key={`logo-1-${index}`}
+              key={`logo-${index}`}
               className="flex flex-col items-center justify-center"
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden bg-muted/50 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <img
                   src={item.logo}
                   alt={`${item.name} logo`}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <span className="mt-2 text-sm font-medium">{item.name}</span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Second carousel - moving right (opposite direction) */}
-      <div className="relative w-full overflow-hidden mt-8">
-        <motion.div
-          initial={{ x: "-50%" }}
-          animate={{ x: 0 }}
-          transition={{
-            repeat: Infinity,
-            duration: 30,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          className="flex items-center space-x-12 whitespace-nowrap"
-        >
-          {duplicatedLogos.reverse().map((item, index) => (
-            <div
-              key={`logo-2-${index}`}
-              className="flex flex-col items-center justify-center"
-            >
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-muted flex items-center justify-center">
-                <img
-                  src={item.logo}
-                  alt={`${item.name} logo`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="mt-2 text-sm font-medium">{item.name}</span>
+              <span className="mt-3 text-sm font-medium">{item.name}</span>
             </div>
           ))}
         </motion.div>
