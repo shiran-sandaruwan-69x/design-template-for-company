@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -7,13 +5,7 @@ export default function Footer() {
     <footer className="bg-muted/50 border-t border-border/50">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <div className="flex items-center mb-2">
               <img src="/logo.svg" alt="IntelleJ Logo" className="h-8 mr-2" />
             </div>
@@ -83,15 +75,9 @@ export default function Footer() {
                 </svg>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <h3 className="text-lg font-semibold">Services</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -135,15 +121,9 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <h3 className="text-lg font-semibold">Company</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -187,15 +167,9 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <h3 className="text-lg font-semibold">Newsletter</h3>
             <p className="text-muted-foreground text-sm">
               Subscribe to our newsletter for the latest updates and insights.
@@ -213,26 +187,14 @@ export default function Footer() {
                 Subscribe
               </button>
             </form>
-          </motion.div>
+          </div>
         </div>
 
         <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-sm text-muted-foreground"
-          >
+          <p className="text-sm text-muted-foreground">
             © {currentYear} IntelleJ. All rights reserved.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex space-x-6 mt-4 md:mt-0"
-          >
+          </p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
             <a
               href="#"
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -251,7 +213,7 @@ export default function Footer() {
             >
               Cookie Policy
             </a>
-          </motion.div>
+          </div>
         </div>
       </div>
     </footer>

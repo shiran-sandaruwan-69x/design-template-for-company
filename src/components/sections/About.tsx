@@ -1,22 +1,11 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.2 });
-
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="absolute -z-10 top-1/4 left-1/4 w-1/2 h-1/2 bg-primary/10 rounded-full blur-3xl" />
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
@@ -52,14 +41,9 @@ export default function About() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 About IntelleJ
@@ -105,7 +89,7 @@ export default function About() {
             </div>
 
             <Button size="lg">Learn More About Us</Button>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

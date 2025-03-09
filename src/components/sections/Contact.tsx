@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -42,13 +41,7 @@ export default function Contact() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsSubmitting(true);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
     console.log("Form submitted:", data);
-    setIsSubmitting(false);
     setIsSuccess(true);
     form.reset();
 
@@ -60,35 +53,15 @@ export default function Contact() {
     <section id="contact" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl md:text-4xl font-bold mb-4"
-          >
-            Get In Touch
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-muted-foreground max-w-2xl mx-auto"
-          >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Have a question or want to work together? Reach out to us using the
             form below.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             <div className="bg-card rounded-xl p-8 shadow-sm border border-border/50">
               <h3 className="text-2xl font-semibold mb-6">
                 Contact Information
@@ -217,25 +190,16 @@ export default function Contact() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div>
             <div className="bg-card rounded-xl p-8 shadow-sm border border-border/50">
               <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
 
               {isSuccess ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-lg mb-6"
-                >
+                <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 p-4 rounded-lg mb-6">
                   <p>Thank you for your message! We'll get back to you soon.</p>
-                </motion.div>
+                </div>
               ) : null}
 
               <Form {...form}>
@@ -315,19 +279,12 @@ export default function Contact() {
                     className="w-full"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      "Send Message"
-                    )}
+                    Send Message
                   </Button>
                 </form>
               </Form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

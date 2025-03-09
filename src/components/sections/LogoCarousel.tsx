@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 interface LogoItem {
   name: string;
   logo: string;
@@ -48,49 +46,23 @@ const logos: LogoItem[] = [
   },
 ];
 
-// Duplicate logos for seamless infinite scroll
-const duplicatedLogos = [...logos, ...logos, ...logos];
-
 export default function LogoCarousel() {
   return (
     <div className="py-16 bg-background overflow-hidden">
       <div className="container mx-auto px-4 mb-8">
         <div className="text-center mb-10">
-          <motion.h2
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl md:text-3xl font-bold mb-4"
-          >
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Trusted by Industry Leaders
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-muted-foreground max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             We've helped companies of all sizes achieve their technology goals
-          </motion.p>
+          </p>
         </div>
       </div>
 
-      {/* Infinite scrolling carousel */}
       <div className="relative w-full overflow-hidden">
-        <motion.div
-          initial={{ x: 0 }}
-          animate={{ x: "-100%" }}
-          transition={{
-            repeat: Infinity,
-            duration: 40,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-          className="flex items-center space-x-16 whitespace-nowrap"
-        >
-          {duplicatedLogos.map((item, index) => (
+        <div className="flex items-center space-x-16 whitespace-nowrap justify-center flex-wrap gap-8 px-4">
+          {logos.map((item, index) => (
             <div
               key={`logo-${index}`}
               className="flex flex-col items-center justify-center"
@@ -105,7 +77,7 @@ export default function LogoCarousel() {
               <span className="mt-3 text-sm font-medium">{item.name}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

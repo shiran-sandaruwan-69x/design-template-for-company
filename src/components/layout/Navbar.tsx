@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/home" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+  { name: "News", href: "/news" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +34,27 @@ export default function Navbar() {
 
   const scrollToSection = (sectionId: string) => {
     setIsOpen(false);
+
+    // Check if it's a route or a section
+    if (sectionId.startsWith("/")) {
+      navigate(sectionId);
+      return;
+    }
+
+    // If we're not on the home page and trying to navigate to a section
+    if (window.location.pathname !== "/" && sectionId.startsWith("#")) {
+      // Navigate to home page first, then scroll to section
+      navigate("/");
+      // Need to wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.querySelector(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+      return;
+    }
+
     const element = document.querySelector(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -39,35 +62,25 @@ export default function Navbar() {
   };
 
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <nav
       className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md shadow-md" : "bg-transparent"}`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center"
-          >
+          <div className="flex items-center">
             <img src="/logo.svg" alt="IntelleJ Logo" className="h-10" />
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => (
-              <motion.button
+              <button
                 key={item.name}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 className="text-foreground hover:text-primary transition-colors"
                 onClick={() => scrollToSection(item.href)}
               >
                 {item.name}
-              </motion.button>
+              </button>
             ))}
             <Button onClick={() => scrollToSection("#contact")}>
               Get Started
@@ -93,23 +106,16 @@ export default function Navbar() {
 
         {/* Mobile Navigation Menu */}
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden mt-4 bg-background/95 backdrop-blur-sm rounded-lg shadow-lg p-4"
-          >
+          <div className="md:hidden mt-4 bg-background/95 backdrop-blur-sm rounded-lg shadow-lg p-4">
             <div className="flex flex-col space-y-4">
               {navItems.map((item) => (
-                <motion.button
+                <button
                   key={item.name}
-                  whileTap={{ scale: 0.95 }}
                   className="text-foreground hover:text-primary py-2 transition-colors"
                   onClick={() => scrollToSection(item.href)}
                 >
                   {item.name}
-                </motion.button>
+                </button>
               ))}
               <Button
                 onClick={() => scrollToSection("#contact")}
@@ -118,9 +124,9 @@ export default function Navbar() {
                 Get Started
               </Button>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   );
 }
